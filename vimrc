@@ -28,18 +28,21 @@ endif
 " ===
 " === System
 " ===
-set nocompatible
+"curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+set norelativenumber
+set nocompatible "识别不同的文件格式
 filetype on
 filetype indent on
 filetype plugin on
 filetype plugin indent on
-set mouse=a
+set mouse=a "支持使用鼠标
 set encoding=utf-8
 
-set clipboard=unnamed
+let &t_ut='' " Prevent incorrect backgroung rendering
 
-" Prevent incorrect backgroung rendering
-let &t_ut=''
+
+
 
 " ===
 " === Main code display
@@ -56,26 +59,25 @@ syntax on
 " ===
 " Better tab
 set expandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=4 "缩进长度
+set shiftwidth=4
+set softtabstop=4
 set list
 set listchars=tab:▸\ ,trail:▫
-set scrolloff=5
+set scrolloff=5 "滚动边界距离
 
 " Prevent auto line split
-set wrap
+set wrap "自动换行
 set tw=0
-
 set indentexpr=
 " Better backspace
 set backspace=indent,eol,start
 
 set foldmethod=indent
 set foldlevel=99
-
+"修改光标图形
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+"let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 " ===
@@ -89,7 +91,7 @@ set splitbelow
 " ===
 set laststatus=2
 set autochdir
-set showcmd
+set showcmd "显示命令
 set formatoptions-=tc
 
 " Show command autocomplete
@@ -133,19 +135,19 @@ map S :w<CR>
 map <LEADER>rc :e ~/.vim/vimrc<CR>
 
 " Undo operations
-noremap l u
+"noremap l u
 " Undo in Insert mode
-inoremap <C-l> <C-u>
+"inoremap <C-l> <C-u>
 
 " Insert Key
-noremap k i
-noremap K I
+"noremap k i
+"noremap K I
 
 " Copy to system clipboard
 vnoremap Y :w !xclip -i -sel c<CR>
 
 " Search
-map <LEADER><CR> :nohlsearch<CR>
+map <LEADER><CR> :nohlsearch<CR>  //清除高亮
 noremap = nzz
 noremap - Nzz
 
@@ -166,13 +168,14 @@ map <LEADER>o o<Esc>u
 " < n   i >
 "     e
 "     v
-noremap u k
-noremap n h
-noremap e j
-noremap i l
+"noremap u k
+"noremap n h
+"noremap e j
+"noremap i l
 " U/E keys for 5 times u/e (faster navigation)
-noremap U 5k
-noremap E 5j
+noremap K 5k
+noremap J 5j
+
 " N key: go to the start of the line
 noremap N 0
 " I key: go to the end of the line
@@ -182,7 +185,7 @@ noremap I $
 noremap W 5w
 noremap B 5b
 " set h (same as n, cursor left) to 'end of word'
-noremap h e
+"noremap h e
 
 " Ctrl + U or E will move up/down the view port without moving the cursor
 noremap <C-U> 5<C-y>
@@ -195,11 +198,13 @@ inoremap <C-E> <Esc>5<C-e>a
 " === Window management
 " ===
 " Use <space> + new arrow keys for moving the cursor around windows
+"分屏移动操作,默认使用ctrl+w+方向,映射为空格+方向
 map <LEADER>w <C-w>w
-map <LEADER>u <C-w>k
-map <LEADER>e <C-w>j
-map <LEADER>n <C-w>h
-map <LEADER>i <C-w>l
+map <LEADER>l <C-w>l
+map <LEADER>k <C-w>k
+map <LEADER>h <C-w>h
+map <LEADER>j <C-w>j
+
 "map <LEADER>r <C-w>r
 
 " Disabling the default s key
@@ -210,7 +215,7 @@ map su :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
 map se :set splitbelow<CR>:split<CR>
 map sn :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
 map si :set splitright<CR>:vsplit<CR>
-
+"更改分屏大小,使用光标箭头方向调整
 " Resize splits with arrow keys
 map <up> :res +5<CR>
 map <down> :res -5<CR>
@@ -228,13 +233,13 @@ noremap srv <C-w>b<C-w>H
 
 
 " ===
-" === Tab management
+" === Tab management "快速切换分屏
 " ===
 " Create a new tab with tu
-map tu :tabe<CR>
+map tu :tabe<CR>  "打开新vim窗口
 " Move around tabs with tn and ti
-map tn :-tabnext<CR>
-map ti :+tabnext<CR>
+map tn :-tabnext<CR>  "切换下一个tab
+map ti :+tabnext<CR> "切换上一个tab
 " Move the tabs with tmn and tmi
 map tmn :-tabmove<CR>
 map tmi :+tabmove<CR>
@@ -308,16 +313,16 @@ endfunc
 
 call plug#begin('~/.vim/plugged')
 
-" Pretty Dress
+" Pretty Dress  " 妆容
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'connorholyday/vim-snazzy'
+Plug 'connorholyday/vim-snazzy' "主题
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'ayu-theme/ayu-vim'
 Plug 'bling/vim-bufferline'
-
+Plug 'dracula/vim'
 " File navigation
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ctrlpvim/ctrlp.vim', { 'on': 'CtrlP' }
 
@@ -328,9 +333,7 @@ Plug 'majutsushi/tagbar', { 'on': 'TagbarOpenAutoClose' }
 Plug 'w0rp/ale'
 
 " Auto Complete
-" Plug 'Valloric/YouCompleteMe'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'davidhalter/jedi-vim'
+Plug 'Valloric/YouCompleteMe'
 
 " Undo Tree
 Plug 'mbbill/undotree/'
@@ -363,7 +366,9 @@ Plug 'vim-scripts/indentpython.vim'
 " Plug 'vim-python/python-syntax', { 'for' :['python', 'vim-plug'] }
 
 " Markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
+Plug 'iamcco/mathjax-support-for-mkdp'
+Plug 'iamcco/markdown-preview.vim'
+"Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'vimwiki/vimwiki'
 
@@ -389,17 +394,18 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'kana/vim-textobj-user'
 Plug 'fadein/vim-FIGlet'
 
+
 call plug#end()
 
 " ===
 " === Create a _machine_specific.vim file to adjust machine specific stuff, like python interpreter location
 " ===
-let has_machine_specific_file = 1
-if empty(glob('~/.vim/_machine_specific.vim'))
-  let has_machine_specific_file = 0
-  exec "!cp ~/.vim/default_configs/_machine_specific_default.vim ~/.vim/_machine_specific.vim"
-endif
-source ~/.vim/_machine_specific.vim
+"let has_machine_specific_file = 1
+"if empty(glob('~/.vim/_machine_specific.vim'))
+"  let has_machine_specific_file = 0
+"  exec "!cp ~/.vim/default_configs/_machine_specific_default.vim ~/.vim/_machine_specific.vim"
+"endif
+"source ~/.vim/_machine_specific.vim
 
 
 " ===
@@ -408,11 +414,11 @@ source ~/.vim/_machine_specific.vim
 map <LEADER>c1 :set background=dark<CR>:colorscheme snazzy<CR>:AirlineTheme dracula<CR>
 map <LEADER>c2 :set background=light<CR>:colorscheme ayu<CR>:AirlineTheme ayu_light<CR>
 
-set termguicolors     " enable true colors support
+"set termguicolors     " enable true colors support
 let ayucolor="light"  " for light version of theme
 " let ayucolor="mirage" " for mirage version of theme
 " let ayucolor="dark"   " for dark version of theme
-colorscheme snazzy
+"colorscheme snazzy
 let g:SnazzyTransparent = 1
 set background=dark
 let g:airline_theme='dracula'
@@ -455,7 +461,7 @@ nnoremap gr :YcmCompleter GoToReferences<CR>
 let g:ycm_autoclose_preview_window_after_completion=0
 let g:ycm_autoclose_preview_window_after_insertion=1
 let g:ycm_use_clangd = 0
-let g:ycm_python_binary_path = g:ycm_python_interpreter_path
+"let g:ycm_python_binary_path = g:ycm_python_interpreter_path
 "let g:ycm_python_interpreter_path = system('which python3')
 "let g:ycm_python_binary_path = system('which python3')
 "let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
@@ -483,15 +489,28 @@ let g:ale_python_pylint_options = "--extension-pkg-whitelist=pygame"
 " ===
 " === MarkdownPreview
 " ===
+"map <F8> : MarkdownPreview<CR>
+"map <F9> : StopMarkdownPreview<CR>
+" for normal mode
+ nmap <silent> <F8> <Plug>MarkdownPreview
+ " for insert mode
+ imap <silent> <F8> <Plug>MarkdownPreview
+ " for normal mode
+ nmap <silent> <F9> <Plug>StopMarkdownPreview
+ " for insert mode
+ imap <silent> <F9> <Plug>StopMarkdownPreview
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_close = 1
 let g:mkdp_refresh_slow = 0
 let g:mkdp_command_for_global = 0
 let g:mkdp_open_to_the_world = 0
 let g:mkdp_open_ip = ''
-let g:mkdp_browser = 'chromium'
+"let g:mkdp_browser = 'chromium'
 let g:mkdp_echo_preview_url = 0
-let g:mkdp_browserfunc = ''
+"let g:mkdp_browserfunc = ''
+let g:mkdp_browserfunc = 'MKDP_browserfunc_default'
+    " Callback Vim function to open browser, the only parameter is the url to
+    " open.
 let g:mkdp_preview_options = {
     \ 'mkit': {},
     \ 'katex': {},
@@ -652,49 +671,4 @@ let g:taskwiki_sort_orders={"C": "pri-"}
 let g:taskwiki_syntax = 'markdown'
 let g:taskwiki_markdown_syntax='markdown'
 let g:taskwiki_markup_syntax='markdown'
-source ~/.vim/snippits.vim
-
-
-" === Experimenting coc.nvim features
-set timeoutlen=100
-set cmdheight=2
-
-inoremap <C-d> <Esc>:set cmdheight=2<CR>a
-inoremap <C-t> <Esc>:set cmdheight=10<CR>a
-nnoremap <C-d> :set cmdheight=2<CR>
-nnoremap <C-t> :set cmdheight=10<CR>
-
-set updatetime=1000
-set shortmess+=c
-set signcolumn=yes
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" Use K to show documentation in preview window
-nnoremap ? :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-"
-" Open the _machine_specific.vim file if it has just been created
-if has_machine_specific_file == 0
-  exec "e ~/.vim/_machine_specific.vim"
-endif
-
+"source ~/.vim/snippits.vim
